@@ -1,0 +1,637 @@
+# 🎯 SalonPro – Master-Level PRD  
+**A Premium Smart Salon Management Platform**  
+*Mobile-First Design · Supabase Backend · Luxury UI/UX*
+
+---
+
+## 📌 1. Executive Summary
+
+SalonPro is a high-end web application that transforms a traditional salon into a **smart, frictionless digital experience**. The platform merges advanced user-facing features (AI styling, AR virtual try-on, online payments) with robust backend tools (barber dashboard, admin panel, loyalty engine). It is built **mobile-first**, delivering a black & gold luxury aesthetic that elevates the brand. The MVP will ship with **core booking + 4 advanced features** (AI suggestion, live slots, rewards, barber dashboard), while future phases unlock premium additions.
+
+---
+
+## 🎯 2. Goals & Success Metrics
+
+- **User Goal:** Book an appointment in <30 seconds, discover suitable styles, and earn rewards.
+- **Business Goal:** Reduce no-shows by 40% (via reminders), increase repeat visits by 25% (loyalty), and grow online revenue (integrated payments).
+- **Project Goal:** Create a portfolio‑grade, production‑ready application demonstrating full‑stack expertise.
+- **KPIs:** Booking conversion rate, time‑to‑book, loyalty redemption rate, admin task completion time.
+
+---
+
+## 👥 3. User Personas
+
+| Persona          | Needs                                                                 |
+|------------------|-----------------------------------------------------------------------|
+| **Customer**     | Quick booking, style recommendations, payment, loyalty tracking      |
+| **Barber**       | View daily schedule, track earnings, manage walk‑ins                  |
+| **Admin**        | Manage services, staff, bookings, offers, and analytics               |
+| **Guest**        | Browse services & gallery, but must sign‑up to book                  |
+
+---
+
+## ⚙️ 4. Functional Requirements
+
+### 🔹 4.1 Core Features (MVP‑1)
+
+- **Online Appointment Booking**  
+  - Step‑by‑step flow: Select service → Choose barber → Pick date & time (shows only available slots) → Confirm.  
+  - Guest booking allowed but requires phone/email.  
+  - Real‑time slot blocking to prevent double‑booking.
+
+- **Service Menu**  
+  - Categorized services (Haircut, Beard, Spa, Facial, etc.) with price, duration, and image.  
+  - Dynamic pricing based on barber seniority (if needed).
+
+- **User Authentication**  
+  - Sign‑up/Login via email/password (Supabase Auth) and OAuth (Google).  
+  - Profile with name, phone, avatar, booking history, loyalty points.
+
+- **Contact & Location**  
+  - Embedded Google Maps with salon address, phone, working hours.  
+  - Click‑to‑call button (mobile).  
+
+- **Gallery**  
+  - Masonry grid of before/after transformations.  
+  - Filter by service type. Lightbox viewer.
+
+### 🚀 4.2 Advanced Features (MVP‑1, Selected 4+)
+
+#### 1. AI Hair Style Suggestion (Must include)  
+- User uploads a face photo (or uses camera).  
+- OpenAI Vision or a pre‑trained model analyzes face shape, skin tone, etc.  
+- Recommends 3 hairstyles with thumbnails and “Try This” option.  
+- *Implementation:* Supabase Edge Function calls external AI API; results cached.
+
+#### 2. Live Slot Availability (Must include)  
+- Booking calendar queries real‑time booked slots.  
+- Barber work hours, break times, and custom off‑days are considered.  
+- Slots dynamically disable when full.
+
+#### 3. Loyalty & Rewards System (Must include)  
+- Every confirmed booking earns points (e.g., 10 points per ₹100 spent).  
+- Points redeemable for discounts on future bookings.  
+- Dashboard shows point balance, history, and available rewards.
+
+#### 4. Barber Dashboard (Must include)  
+- Separate login for barbers (role‑based).  
+- View today’s appointments, mark completions, see weekly earnings summary.  
+- Limited access (cannot edit services or other barbers).
+
+#### 5. Online Payment Integration (Highly recommended)  
+- Razorpay / Stripe integration for UPI, cards, netbanking.  
+- Payment captures at booking confirmation; refund flow for admin.  
+- Success/failure handled gracefully with booking status update.
+
+#### 6. Admin Panel  
+- **Dashboard:** Total bookings, revenue, popular services.  
+- **Services CRUD:** Name, price, duration, category, image, active status.  
+- **Staff Management:** Add/edit barbers, assign services, set schedules, commissions.  
+- **Booking Control:** View all bookings, filter by date/barber, cancel/reschedule.  
+- **Offers & Coupons:** Create percentage/flat discounts, validity period, usage limit.
+
+#### 7. Notification System  
+- **SMS/Email reminder** 24h before appointment (via Twilio/SendGrid).  
+- **In‑app toast notifications** (booking confirmed, points earned).  
+- **Push notifications** (future: PWA).
+
+### 💎 4.3 Extra Premium Features (Phase 2)
+
+- **AR Virtual Try‑On** – Live camera integration with AR.js/DeepAR to overlay hairstyles.
+- **Chat Support** – WhatsApp floating button + AI chatbot for FAQs.
+- **Review & Rating** – Customers rate barbers after service, visible on barber profile.
+- **Offers & Coupon System** – Admins create promo codes; applied at checkout.
+- **Dark Mode** – Toggle in settings; all components adhere to dark theme palette.
+
+---
+
+## 🎨 5. UI/UX Design System (Mobile‑First Luxury Feel)
+
+### 5.1 Core Principles
+- **Luxury Minimalism:** Black (#0A0A0A) primary, gold (#D4AF37) accent, white/grey text.
+- **Typography:** `Playfair Display` for headings (elegance), `Inter` for body (clean readability).
+- **Spacing:** Generous whitespace, 8dp grid system.
+- **Motion:** Smooth micro-interactions (fade‑in, slide‑up), deliberate but fast (≤300ms).
+
+### 5.2 Mobile‑First Breakpoints
+- Base design at `375px` width (iPhone SE).  
+- Tablet: `768px` (`md`), Desktop: `1024px` (`lg`), Wide: `1280px` (`xl`).  
+- All touch targets minimum `48x48px`.  
+- Navigation: Bottom tab bar (mobile) → Sidebar on desktop.
+
+### 5.3 Color Palette
+| Role             | Color Code | Usage                     |
+|------------------|------------|---------------------------|
+| Primary Black    | `#0A0A0A`  | Backgrounds, headers      |
+| Accent Gold      | `#D4AF37`  | Buttons, links, icons     |
+| Surface Dark     | `#1A1A1A`  | Cards, dialogs            |
+| Text Primary     | `#FFFFFF`  | Headlines, body           |
+| Text Secondary   | `#A0A0A0`  | Subtitles, muted info     |
+| Success          | `#2ECC71`  | Confirmations, points     |
+| Error            | `#E74C3C`  | Errors, cancellations     |
+
+### 5.4 Iconography & Imagery
+- Line‑style icons (Phosphor Icons), gold tint on dark backgrounds.  
+- High‑quality salon photography, consistent `#0A0A0A` overlay with `60%` opacity.
+
+### 5.5 Components Library (Concept)
+- **Buttons:** Primary (gold bg, black text), Outline (gold border), Ghost.  
+- **Cards:** Dark surface with `2px` gold border on hover/active.  
+- **Forms:** Transparent inputs with gold bottom border, gold focus glow.  
+- **Modals:** Slide‑up from bottom on mobile, centered on desktop.
+
+---
+
+## 🧭 6. Information Architecture & User Flows
+
+### 6.1 Site Map (Simplified)
+```
+Home
+├── Services
+│   └── Service Detail
+├── Gallery
+├── Book Now (flow)
+│   ├── Step 1: Service & Barber
+│   ├── Step 2: Date & Time
+│   ├── Step 3: Review & Pay
+│   └── Confirmation
+├── AI Style Suggestion (upload photo)
+├── Loyalty Rewards
+├── Profile (My Bookings, Points, Settings)
+├── Admin Panel (if role=admin)
+└── Barber Dashboard (if role=barber)
+```
+
+### 6.2 Key User Flow: Booking (Mobile)
+1. Tap “Book Now” floating button (sticky).  
+2. Select service category → choose specific service → view price/duration.  
+3. Pick a barber (avatar row with ratings).  
+4. Calendar opens: available dates highlighted, tap a date → time slots appear.  
+5. Select slot → review summary → “Pay & Confirm” (or “Confirm” for free bookings).  
+6. Success screen with appointment details + “Add to Calendar” option.  
+7. Notification sent immediately.
+
+---
+
+## 📱 7. Key Mobile Screen Wireframes (Description)
+
+> All screens are designed for 375px width, black/gold theme.
+
+### Screen 1: Home
+- Hero slider (gold‑tinged images, tagline, CTA “Book Now”).  
+- Quick action cards: “Haircut”, “Beard”, “Spa” (horizontal scroll).  
+- “AI Style Try‑On” teaser card (photo upload preview).  
+- Loyalty points banner (progress bar to next reward).  
+- Bottom navigation: Home, Services, Book, Gallery, Profile.
+
+### Screen 2: Booking – Service & Barber
+- Step indicator at top.  
+- Sticky header: “Choose Your Service”.  
+- Service cards list (name, price, duration, “Select” button).  
+- After selection, barber section slides in: profile circles, “Any Barber” option, rating stars.
+
+### Screen 3: Booking – Date & Time
+- Calendar strip (horizontal, swipeable months).  
+- Golden dots on dates with availability; today highlighted.  
+- Below calendar: time slots in a 3‑column grid, past slots greyed out, occupied slots red “X”, free slots gold “Select”.  
+- CTA “Continue” fixed at bottom.
+
+### Screen 4: AI Suggestion
+- Camera/upload trigger.  
+- After upload, “Analyzing…” loader (gold shimmer).  
+- Results: 3 recommended styles with 3D‑like thumbnails.  
+- Each card: style name, “Try AR” button (future), “Book with this style” button.
+
+### Screen 5: Barber Dashboard
+- Greeting: “Hello, Raj!”  
+- Today’s earnings & appointment count.  
+- Timeline of appointments (time, customer name, service, status).  
+- Check‑in button to mark completed.  
+- View weekly summary (click expand).
+
+---
+
+## 🛠️ 8. Technical Architecture
+
+### 8.1 Stack Choice
+- **Frontend:** React (Next.js 14) for SSR, Tailwind CSS for styling, Framer Motion for animations.  
+- **Backend / Database / Auth:** **Supabase** (PostgreSQL, Auth, Storage, Edge Functions).  
+- **Payments:** Razorpay (Indian market) / Stripe (global).  
+- **Notifications:** Twilio (SMS) + SendGrid (Email) via Supabase Edge Functions.  
+- **AI Integration:** OpenAI API (GPT‑4 Vision) for hairstyle recommendations.  
+- **AR (Phase 2):** DeepAR / AR.js.
+
+### 8.2 Supabase Services Used
+- **Auth:** Email/Password, Google OAuth.  
+- **Database:** Tables for all entities.  
+- **Storage:** User uploads (photos for AI, gallery images).  
+- **Edge Functions:** AI calls, payment webhooks, notification triggers.  
+- **Realtime:** (Optional) Live slot updates via Postgres changes.
+
+---
+
+## 🗄️ 9. Supabase Database Schema & RLS Policies
+
+Below is a complete SQL schema file that you can run in Supabase SQL Editor. It sets up tables, relationships, and Row Level Security policies for a production‑ready system.
+
+### 📂 `supabase_schema.sql`
+
+```sql
+-- Enable UUID generation
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- 1. Profiles (extends auth.users)
+CREATE TABLE public.profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  full_name TEXT,
+  phone TEXT UNIQUE,
+  avatar_url TEXT,
+  role TEXT DEFAULT 'customer' CHECK (role IN ('customer', 'barber', 'admin')),
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 2. Services
+CREATE TABLE public.services (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  description TEXT,
+  price DECIMAL(10,2) NOT NULL,
+  duration_minutes INT NOT NULL,
+  image_url TEXT,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 3. Barbers (barber-specific profile details)
+CREATE TABLE public.barbers (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  profile_id UUID UNIQUE REFERENCES public.profiles(id) ON DELETE CASCADE,
+  specialties UUID[] DEFAULT '{}',
+  commission_percent DECIMAL(5,2) DEFAULT 50.00,
+  work_start TIME DEFAULT '09:00',
+  work_end TIME DEFAULT '18:00',
+  off_days TEXT[] DEFAULT ARRAY['Sunday']::TEXT[],
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 4. Barber Service Assignments (many-to-many)
+CREATE TABLE public.barber_services (
+  barber_id UUID REFERENCES public.barbers(id) ON DELETE CASCADE,
+  service_id UUID REFERENCES public.services(id) ON DELETE CASCADE,
+  PRIMARY KEY (barber_id, service_id)
+);
+
+-- 5. Appointments
+CREATE TABLE public.appointments (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  customer_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+  barber_id UUID REFERENCES public.barbers(id) ON DELETE SET NULL,
+  service_id UUID REFERENCES public.services(id) ON DELETE SET NULL,
+  appointment_date DATE NOT NULL,
+  start_time TIME NOT NULL,
+  end_time TIME NOT NULL,
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'completed', 'cancelled')),
+  payment_status TEXT DEFAULT 'unpaid' CHECK (payment_status IN ('unpaid', 'paid', 'refunded')),
+  amount DECIMAL(10,2),
+  points_earned INT DEFAULT 0,
+  notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 6. Loyalty Points
+CREATE TABLE public.loyalty_points (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  profile_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  points INT DEFAULT 0,
+  last_updated TIMESTAMPTZ DEFAULT now()
+);
+
+-- 7. Loyalty Transactions (history)
+CREATE TABLE public.loyalty_transactions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  profile_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  appointment_id UUID REFERENCES public.appointments(id) ON DELETE SET NULL,
+  points_change INT NOT NULL,
+  reason TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 8. Reviews
+CREATE TABLE public.reviews (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  appointment_id UUID UNIQUE REFERENCES public.appointments(id) ON DELETE CASCADE,
+  rating INT CHECK (rating >= 1 AND rating <= 5),
+  comment TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 9. Offers/Coupons (Admin managed)
+CREATE TABLE public.coupons (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  code TEXT UNIQUE NOT NULL,
+  discount_percent DECIMAL(5,2),
+  flat_discount DECIMAL(10,2),
+  max_uses INT,
+  used_count INT DEFAULT 0,
+  valid_from TIMESTAMPTZ,
+  valid_until TIMESTAMPTZ,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 10. Notification Logs
+CREATE TABLE public.notifications (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  profile_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  type TEXT CHECK (type IN ('sms', 'email', 'in_app')),
+  message TEXT,
+  sent_at TIMESTAMPTZ DEFAULT now(),
+  read BOOLEAN DEFAULT false
+);
+
+-- ============================================================
+-- ROW LEVEL SECURITY POLICIES
+-- ============================================================
+-- Enable RLS on all tables
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.services ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.barbers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.barber_services ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.appointments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.loyalty_points ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.loyalty_transactions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.coupons ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
+
+-- Profiles: Users can read/update only their own profile
+CREATE POLICY "Users can read own profile" ON public.profiles
+  FOR SELECT USING (auth.uid() = id);
+
+CREATE POLICY "Users can update own profile" ON public.profiles
+  FOR UPDATE USING (auth.uid() = id);
+
+-- Admin can see all profiles (add admin check function later)
+CREATE POLICY "Admin can read all profiles" ON public.profiles
+  FOR SELECT USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'));
+
+-- Services: Public read, admin insert/update/delete
+CREATE POLICY "Anyone can view active services" ON public.services
+  FOR SELECT USING (active = true);
+
+CREATE POLICY "Admin can manage services" ON public.services
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'));
+
+-- Barbers: Public read (active barbers), admin/self update
+CREATE POLICY "Public can view barbers" ON public.barbers
+  FOR SELECT USING (true);  -- We might restrict to barbers with a profile that exists, but okay for now
+
+CREATE POLICY "Admin can manage barbers" ON public.barbers
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'));
+
+CREATE POLICY "Barber can update own record" ON public.barbers
+  FOR UPDATE USING (profile_id = auth.uid());
+
+-- Appointments: Customers read/create own; barbers read assigned; admin all
+CREATE POLICY "Customer can view own appointments" ON public.appointments
+  FOR SELECT USING (customer_id = auth.uid());
+
+CREATE POLICY "Customer can create own appointments" ON public.appointments
+  FOR INSERT WITH CHECK (customer_id = auth.uid());
+
+CREATE POLICY "Barber can see own appointments" ON public.appointments
+  FOR SELECT USING (barber_id IN (SELECT id FROM public.barbers WHERE profile_id = auth.uid()));
+
+CREATE POLICY "Admin can manage all appointments" ON public.appointments
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'));
+
+-- Loyalty points: User can read own, system/triggers update
+CREATE POLICY "User can read own loyalty points" ON public.loyalty_points
+  FOR SELECT USING (profile_id = auth.uid());
+
+-- Only admin/function can insert/update loyalty, but we allow updates via trigger (bypass RLS via SECURITY DEFINER function)
+-- We'll create a function instead of direct update.
+
+-- Loyalty transactions: Read own
+CREATE POLICY "User can read own transactions" ON public.loyalty_transactions
+  FOR SELECT USING (profile_id = auth.uid());
+
+-- Reviews: Public read, customer writes for own completed appointment
+CREATE POLICY "Public can read reviews" ON public.reviews
+  FOR SELECT USING (true);
+
+CREATE POLICY "Customer can create review for completed own appointment" ON public.reviews
+  FOR INSERT WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.appointments
+      WHERE appointments.id = appointment_id
+        AND appointments.customer_id = auth.uid()
+        AND appointments.status = 'completed'
+    )
+  );
+
+-- Coupons: Public (authenticated) can read valid ones, admin manage
+CREATE POLICY "Users can see active coupons" ON public.coupons
+  FOR SELECT USING (active = true AND (valid_until IS NULL OR valid_until > now()));
+
+CREATE POLICY "Admin can manage coupons" ON public.coupons
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'));
+
+-- Notifications: Read own
+CREATE POLICY "User can read own notifications" ON public.notifications
+  FOR SELECT USING (profile_id = auth.uid());
+
+-- ============================================================
+-- Helper Functions (Optional)
+-- ============================================================
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, full_name, avatar_url, role)
+  VALUES (NEW.id, NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'avatar_url', 'customer');
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Trigger on auth.users insert
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+```
+
+---
+
+## 🧑‍💻 10. Starter Code Snippets (React + Supabase)
+
+### 10.1 Supabase Client Initialization (`lib/supabaseClient.js`)
+
+```javascript
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+```
+
+### 10.2 Authentication Hook (`hooks/useAuth.js`)
+
+```javascript
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
+
+export function useAuth() {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
+    return () => listener.subscription.unsubscribe()
+  }, [])
+
+  return { user, loading }
+}
+```
+
+### 10.3 Booking Service (`services/bookingService.js`)
+
+```javascript
+import { supabase } from '../lib/supabaseClient'
+
+export async function getAvailableSlots(barberId, serviceId, date) {
+  // 1. Get barber work hours & existing appointments for that date
+  const { data: barber } = await supabase
+    .from('barbers')
+    .select('work_start, work_end')
+    .eq('id', barberId)
+    .single()
+
+  const { data: service } = await supabase
+    .from('services')
+    .select('duration_minutes')
+    .eq('id', serviceId)
+    .single()
+
+  // Generate time slots
+  const slots = []
+  let current = new Date(`${date}T${barber.work_start}`)
+  const end = new Date(`${date}T${barber.work_end}`)
+  const duration = service.duration_minutes * 60000
+
+  while (current < end) {
+    const timeStr = current.toTimeString().slice(0, 5)
+    slots.push(timeStr)
+    current = new Date(current.getTime() + duration)
+  }
+
+  // Fetch existing appointments
+  const { data: booked } = await supabase
+    .from('appointments')
+    .select('start_time, end_time')
+    .eq('barber_id', barberId)
+    .eq('appointment_date', date)
+    .in('status', ['confirmed', 'pending'])
+
+  // Remove overlapping slots
+  const bookedTimes = booked.map(b => ({ start: b.start_time, end: b.end_time }))
+  const available = slots.filter(slot => {
+    const slotStart = new Date(`${date}T${slot}:00`)
+    const slotEnd = new Date(slotStart.getTime() + duration)
+    return !bookedTimes.some(
+      b => (slotStart >= new Date(`${date}T${b.start}:00`) && slotStart < new Date(`${date}T${b.end}:00`))
+        || (slotEnd > new Date(`${date}T${b.start}:00`) && slotEnd <= new Date(`${date}T${b.end}:00`))
+    )
+  })
+
+  return available
+}
+
+export async function createAppointment(appointmentData) {
+  // Insert, trigger loyalty points update via database trigger/Edge Function
+  const { data, error } = await supabase
+    .from('appointments')
+    .insert(appointmentData)
+    .single()
+  return { data, error }
+}
+```
+
+---
+
+## 📁 11. GitHub Project Structure
+
+```
+salonpro/
+├── public/
+│   ├── images/ (gallery, icons)
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── ui/ (Button, Card, Modal, Input)
+│   │   ├── layout/ (Navbar, Footer, BottomNav)
+│   │   ├── booking/ (ServiceSelector, BarberPicker, SlotGrid)
+│   │   ├── ai/ (PhotoUpload, ResultCard)
+│   │   └── dashboard/ (AdminStats, BarberTimeline)
+│   ├── hooks/ (useAuth, useBookings, useLoyalty)
+│   ├── lib/ (supabaseClient, utils)
+│   ├── pages/ (Next.js routes)
+│   │   ├── index.js (Home)
+│   │   ├── services/[id].js
+│   │   ├── book.js
+│   │   ├── ai-suggestion.js
+│   │   ├── loyalty.js
+│   │   ├── profile.js
+│   │   ├── admin/ (dashboard, services, staff, bookings)
+│   │   ├── barber/ (dashboard)
+│   │   └── api/ (edge functions proxy)
+│   ├── styles/ (globals.css, Tailwind config)
+│   └── supabase/
+│       ├── schema.sql
+│       └── rls_policies.sql
+├── .env.local
+├── tailwind.config.js
+├── package.json
+└── README.md
+```
+
+---
+
+## 🗺️ 12. Development Phases & Roadmap
+
+| Phase | Features                                                      | Time Est. |
+|-------|---------------------------------------------------------------|-----------|
+| **MVP‑1** | Core booking, service menu, auth, gallery, contact, **+4 advanced** (AI suggestion, live slots, loyalty, barber dash) | 4 weeks   |
+| **MVP‑2** | Online payment, admin panel (basic CRUD), email/SMS reminders | 2 weeks   |
+| **Phase 3** | Reviews, offers/coupons, dark mode, AR virtual try‑on         | 3 weeks   |
+| **Phase 4** | Chat support, nearby salons compare, analytics export, PWA    | ongoing   |
+
+---
+
+## 🔮 13. Future Enhancements
+
+- **Nearby Salons Compare** – Aggregate competitor data (require API).  
+- **AI‑powered booking suggestions** – based on user history.  
+- **Voice‑based booking** – integration with Google Assistant/ Alexa.  
+- **Multi‑language support** (Tamil, Hindi).  
+- **Franchise management** – Multi‑location salon dashboard.
+
+---
+
+## ✅ 14. Conclusion & Next Steps
+
+This PRD provides a **master‑level blueprint** to build a standout salon platform. With Supabase handling backend complexity and mobile‑first luxury UI/UX, the project will be a compelling portfolio piece and a real‑world business solution.
+
+**Immediate actions:**
+1. Set up Supabase project and run the provided schema SQL.  
+2. Initialize a Next.js project with Tailwind, configure Supabase client.  
+3. Build the shared UI components (gold‑accented buttons, cards).  
+4. Implement authentication flows and protected routes.  
+5. Develop the booking module as the core, then layer advanced features.
+
+---
+
+**Ready to start?** Run the SQL dump, clone the starter, and you’re on your way to creating a **🔥 sema level salon website**.
